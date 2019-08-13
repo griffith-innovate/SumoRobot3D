@@ -82,5 +82,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: RobotBody
       objectReference: {fileID: 0}
+    - target: {fileID: 4521698339038788002, guid: d3d60e81c6d64ed47a58545bbb4199a1,
+        type: 3}
+      propertyPath: m_Name
+      value: BasicRobot_Dumb
+      objectReference: {fileID: 0}
+    - target: {fileID: 4748081522506314215, guid: d3d60e81c6d64ed47a58545bbb4199a1,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d3d60e81c6d64ed47a58545bbb4199a1, type: 3}
