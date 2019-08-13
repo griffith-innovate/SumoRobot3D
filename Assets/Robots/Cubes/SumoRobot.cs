@@ -5,11 +5,26 @@ using UnityEngine;
 public class SumoRobot : MonoBehaviour
 {
     #region Member Variables
-    public float speed;                  // Current speed in m/s
-    public float acceleration;           // Acceleration in m/s^2
-    public float maxSpeed = 1.5f;        // Maximum speed in m/s
-    public float downForce = 110.0f;     // Downforce in newtons: (mass * grav) + magnetic_force
-    public float lastTime;
+    private float lastTime;
+
+    // Motor and gearing
+    public float MotorTorque;
+    public float MotorRPM;
+    public float GearRatio;
+    public float GearEfficiency;
+
+    // Chassis
+    public float Width;
+    public float Depth;
+
+    // These variables are for positioning the wheels. Assume that the 
+    // robot is facing North with the front at positive Y. 
+    public float WheelRadius;
+    public float FrontWheelAxisY;
+    public float RearWheelAxisY;
+    public float LeftWheelAxisX;
+    public float RightWheelAxisX;
+
 
     #endregion
     // Start is called before the first frame update
@@ -21,8 +36,5 @@ public class SumoRobot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float deltaTime = Time.time - this.lastTime;
-        this.speed += acceleration * deltaTime;
-        this.transform.position.x += this.speed;
     }
 }
