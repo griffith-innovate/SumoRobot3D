@@ -9,6 +9,14 @@ public class SumoRobot : MonoBehaviour
     public float m_Speed;
     public float m_Acceleration;
     public float m_Brake;
+    public float MaxSpeed;
+    public float MinSpeed;
+    public float MaxTurn;
+    public float MinTurn;
+    public float Weight;                    // Newtons
+    public float MagneticDownforce;         // Newtons
+    public Wheel[] Wheels;
+
 
     #endregion
     // Start is called before the first frame update
@@ -18,6 +26,17 @@ public class SumoRobot : MonoBehaviour
         m_Speed = 0.0f;
         m_Acceleration = 0.1f;
         m_Brake = 0.5f;
+
+        // What are the maximum velocity values?
+        // +'ive for forwards, -'tive for backwards
+        MaxSpeed = 1.0f;        
+        MinSpeed = 0.0f;
+
+        // +'tive for Right. -'tive for Left.
+        MinTurn = -3.0f;
+        MaxTurn = 3.0f;
+
+        // Set motors
     }
 
     // Update is called once per frame
@@ -27,27 +46,44 @@ public class SumoRobot : MonoBehaviour
         // Move object
         m_Rigidbody.velocity = transform.forward * m_Speed;
     }
+
+    // Set a relative speed. Valid input range is -1, ... , +1. This will 
+    // be mapped to the minimum and maximum speeds. 
+    public void setSpeed(float speed){
+        float localMin = -1.0f;
+        float localMax = 1.0f;
+
+        // Constrain the inputs to our limits
+        if(speed > localMax){
+            speed = localMax;
+        }
+        if(speed < localMin){
+            speed = localMin;
+        }
+
+        // Map the input to a speed
+        float m_speed = (speed - localMax) * (MaxSpeed - MinSpeed) / (localMax - localMin) + MinSpeed;
+    }
+
     void checkInputs()
     {
         // Check for acceleration
         if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
         {
-            m_Speed += m_Acceleration;
+            // m_Speed += m_Acceleration;
+            setSpeed(1);
         }
 
         // Check for deceleration/braking
         if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
         {
-            m_Speed -= m_Brake;
+            // m_Speed -= m_Brake;
+            setSpeed(-1);
         }
 
         // Check for right turn
         if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
         {
-            // Debug.Log("Turn right");
-            // Vector3 NewTransform = new Vector3(0, 1, 0);
-            // transform.Rotate(NewTransform * Time.deltaTime * m_Speed, Space.World);
-            // transform.rotation = new Quaternion(0, 1, 0, 0);
             transform.Rotate(0.0f, 0.5f, 0.0f);
         }
 
@@ -55,11 +91,12 @@ public class SumoRobot : MonoBehaviour
         if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
         {
             transform.Rotate(0.0f, -0.5f, 0.0f);
-            // Debug.Log("Turn left");
-            // transform.rotation = new Quaternion(0, -1, 0, 0);
-            // Vector3 NewTransform = new Vector3(0, -1, 0);
-            // transform.Rotate(NewTransform * Time.deltaTime * m_Speed, Space.World);
         }
 
     }
+
+    public bool checkWheelSlip(){
+
+    }
+
 }
