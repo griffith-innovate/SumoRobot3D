@@ -36,8 +36,8 @@ public class DumbAgent : MonoBehaviour
 
         // Find out what it sees
         foreach(OpticalSensor sensor in Controller.OpticalSensors){
-            if(sensor.Hit){
-                Target = sensor.HitObject;
+            if(sensor.Hit()){
+                Target = sensor.HitObject();
                 FoundBy = sensor;
                 break;
             }
@@ -50,7 +50,7 @@ public class DumbAgent : MonoBehaviour
 
     void Aim(){
         // What is the angle of the sensor that found it
-        float angle = FoundBy.Angle;
+        float angle = FoundBy.Angle();
         Controller.Turn(angle);
     }
 }

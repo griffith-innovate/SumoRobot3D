@@ -10,13 +10,8 @@ public class RobotController : MonoBehaviour
     Rigidbody m_Rigidbody;
     public float m_Speed;
     public float Velocity;                  // Velocity of the robot in m/s
-    public float m_Brake;
-    public int Direction;                   // -1: left, 0: straight, +1: right
-    public float TurnDiameter;
     public float Weight;                    // Newtons
     public float MagneticDownforce;         // Newtons
-    public float MaxSpeed;
-    public float MinSpeed;
     public Wheel[] Wheels;
     public OpticalSensor[] OpticalSensors;
     public float Force;
@@ -31,20 +26,11 @@ public class RobotController : MonoBehaviour
         Weight = 3.0f;
         MagneticDownforce = 1000;
         m_Speed = 0.0f;
-        m_Brake = 0.5f;
 
         // Get the wheels
         Wheels = GetComponentsInChildren<Wheel>();
         OpticalSensors = GetComponentsInChildren<OpticalSensor>();
-
-        // What are the maximum velocity values?
-        // +'ive for forwards, -'tive for backwards
-        MaxSpeed = 1.0f;        
-        MinSpeed = 0.0f;
-
-        // Default to move straight
-        Direction = 0;
-
+        
         // Convert our downforce to a mass (kg)
         m_Rigidbody.mass = Weight + (MagneticDownforce / 9.81f);
     }
@@ -73,8 +59,8 @@ public class RobotController : MonoBehaviour
         float forceSum = 0.0f;
         foreach(Wheel wheel in Wheels){
             wheel.SetSpeed(speed);
-            velocitySum += wheel.WheelOutputVelocity;
-            forceSum += wheel.WheelOutputForce;
+            velocitySum += wheel.WheelOutputSpeed();
+            forceSum += wheel.WheelOutputForce();
         }
         Velocity = velocitySum / Wheels.Length;
     }
@@ -120,15 +106,15 @@ public class RobotController : MonoBehaviour
 
     // Set the speeds of the wheels so that we can have a differential turn
     // in a direction with a given radius
-    public void Turn(int direction, float radius){
-        // R = W(V_L + V_R) / 2(V_L - VR)
-        // Where R = Radius of turn
-        // W = Distance between Left and Right wheels
+    // public void Turn(int direction, float radius){
+    //     // R = W(V_L + V_R) / 2(V_L - VR)
+    //     // Where R = Radius of turn
+    //     // W = Distance between Left and Right wheels
 
-        // V_L, V_R = Velocity of Left and Right wheels respectively
-        // These can be calculated using:
-        // V_L = V ( 1 + W/(2R) )
-        // V_R = V ( 1 - W/(2R) )
-    }
+    //     // V_L, V_R = Velocity of Left and Right wheels respectively
+    //     // These can be calculated using:
+    //     // V_L = V ( 1 + W/(2R) )
+    //     // V_R = V ( 1 - W/(2R) )
+    // }
 
 }
