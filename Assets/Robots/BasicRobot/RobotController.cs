@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SumoRobot : MonoBehaviour
+public class RobotController : MonoBehaviour
 {
     #region Member Variables
     Rigidbody m_Rigidbody;
@@ -96,7 +96,7 @@ public class SumoRobot : MonoBehaviour
     }
 
     public bool checkWheelSlip(){
-
+        return false;
     }
 
 }

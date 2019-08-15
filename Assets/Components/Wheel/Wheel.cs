@@ -2,82 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-struct Power
-{
-    public float RPM;
-    public float Torque;
-    public float Radius;
-}
-
 public class Wheel : MonoBehaviour
 {
-    #region Member variables
-    // Motor and gearing
-    public float MotorTorque = 0.63f;        // in Nm
-    public float MotorRPM = 0.0f;
-    public float MaxMotorRPM = 7920.0f;
-    public float GearRatio = 0.8f;
-    public float GearEfficiency = 0.8f;
+    #region Member Variables
+    public float MotorTorque;           // Nm
+    public float MotorRPM;              
+    public float MotorMaxRPM;
 
-    // These variables are for positioning the wheels. Assume that the 
-    // robot is facing North with the front at positive Y. 
-    public float WheelRadius = 0.055f / 2.0f;               // 55mm in metres
-    public float Acceleration = 0.1f;
-    public float Deceleration = 0.5f;
+    public float GearRatio;             // 0, ... , 1
+    public float GearEfficiency;        // 0, ..., 1
+    public float GearOutputRPM;
+    public float GearOuputTorque;
 
-    public float Velocity;
-    public float Force;
+    public float WheelDiameter;         // metres
+    public float WheelFrictionCoefficient; 
+    public float WheelOutputTorque;
+    public float WheelOuputForce;
+    public float WheelOutputVelocity;
 
-    public float x;
-    public float y;
+    public float xOffset;
+    public float yOffset;
 
     #endregion
-
-    public void accelerate()
-    {
-        Power GearOutput, WheelOutput;
-
-        // Increase the Motor RPM
-        MotorRPM += Acceleration;
-
-        // Calculate power of gears and wheels
-        GearOutput = calculateGearOutput();
-        WheelOutput = calculateWheelOutput(GearOutput);
-
-        // Calculate the velocity and force
-        Velocity = (Mathf.PI * WheelOutput.Radius * 2) * (WheelOutput.RPM / 60);
-        Force = WheelOutput.Torque / WheelOutput.Radius;
-    }
-    public void brake()
-    {
-        Power GearOutput, WheelOutput;
-
-        // Decreate motor RPM
-        MotorRPM -= Deceleration;
-
-        // Calculate power of gears and wheels
-        GearOutput = calculateGearOutput();
-        WheelOutput = calculateWheelOutput(GearOutput);
-
-        // Calculate the velocity and force
-        Velocity = (Mathf.PI * WheelOutput.Radius * 2) * (WheelOutput.RPM / 60);
-        Force = WheelOutput.Torque / WheelOutput.Radius;
+    // Start is called before the first frame update
+    void Start()
+    {   
+        MotorTorque = 1.99f;
+        MotorRPM = 0.0f;
+        MotorMaxRPM = 8640.0f;
+        GearEfficiency = 0.8f;
+        WheelDiameter = 0.055f;
+        WheelFrictionCoefficient = 0.6f;
     }
 
-    private Power calculateWheelOutput(Power GearOutput)
+    // Update is called once per frame
+    void Update()
     {
-        Power WheelOutput = new Power();
-        WheelOutput.Torque = GearOutput.Torque / WheelRadius;
-        WheelOutput.RPM = GearOutput.RPM;
-        WheelOutput.Radius = this.WheelRadius;
-        return WheelOutput;
     }
 
-    private Power calculateGearOutput()
-    {
-        Power Result = new Power();
-        Result.Torque = MotorTorque / GearRatio;
-        Result.RPM = MotorRPM * GearRatio;
-        return Result;
+    // Speed will be a value between 0 and 1
+    void SetSpeed(float speed){
+        float localMax = 1.0f;
+        float localMin = -1.0f;
+
+        // Constrain our speed value
+        speed = Mathf.Clamp(speed, localMin, localMax);
+
+        // Map MotorRPM to an absolute RPM value
+        MotorRPM = (Mathf.Abs(speed) - localMax) * (MotorMaxRPM / localMax);
+
+        // Check if we're going forwards or backwards
+        if(speed < 0.0f){
+            MotorRPM += -1;
+        }
+
+        // Calculate the gear output
+        GearOuputTorque = (MotorTorque / GearRatio) * GearEfficiency;
+        GearOutputRPM = (MotorRPM * GearRatio) * GearEfficiency;
+
+        // Calculate the wheel torque
+        WheelOutputTorque = GearOuputTorque / (WheelDiameter / 2);
+        WheelOutputVelocity = (Mathf.PI * WheelDiameter) * (GearOutputRPM / 60);
     }
+
 }

@@ -55,8 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Components\Sensors\OpticalSensor\LineOfSight.cs" />
      <Compile Include="Assets\Components\Wheel\Wheel.cs" />
-     <Compile Include="Assets\Robots\BasicRobot\Motor.cs" />
-     <Compile Include="Assets\Robots\BasicRobot\SumoRobot.cs" />
+     <Compile Include="Assets\Robots\BasicRobot\RobotController.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/development/SumoRobot3D/SumoRobot3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
