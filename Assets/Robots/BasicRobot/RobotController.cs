@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// This is essentially the motor controller simulator
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,15 +9,16 @@ public class RobotController : MonoBehaviour
     #region Member Variables
     Rigidbody m_Rigidbody;
     public float m_Speed;
-    public float m_Acceleration;
+    public float Velocity;                  // Velocity of the robot in m/s
     public float m_Brake;
-    public float MaxSpeed;
-    public float MinSpeed;
-    public float MaxTurn;
-    public float MinTurn;
+    public int Direction;                   // -1: left, 0: straight, +1: right
+    public float TurnDiameter;
     public float Weight;                    // Newtons
     public float MagneticDownforce;         // Newtons
+    public float MaxSpeed;
+    public float MinSpeed;
     public Wheel[] Wheels;
+    // public MotorController MC;
 
 
     #endregion
@@ -24,61 +27,64 @@ public class RobotController : MonoBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Speed = 0.0f;
-        m_Acceleration = 0.1f;
         m_Brake = 0.5f;
+
+        // Get the wheels
+        Wheels = GetComponentsInChildren<Wheel>();
 
         // What are the maximum velocity values?
         // +'ive for forwards, -'tive for backwards
         MaxSpeed = 1.0f;        
         MinSpeed = 0.0f;
 
-        // +'tive for Right. -'tive for Left.
-        MinTurn = -3.0f;
-        MaxTurn = 3.0f;
-
-        // Set motors
+        // Default to move straight
+        Direction = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        checkInputs();
+        CheckInputs();
         // Move object
-        m_Rigidbody.velocity = transform.forward * m_Speed;
+        m_Rigidbody.velocity = transform.forward * (Velocity + Time.deltaTime);
+        // m_Rigidbody.transform.forward 
     }
 
     // Set a relative speed. Valid input range is -1, ... , +1. This will 
     // be mapped to the minimum and maximum speeds. 
-    public void setSpeed(float speed){
+    public void SetSpeed(float speed){
+        Debug.Log("SetSpeed(" + speed + ")");
         float localMin = -1.0f;
         float localMax = 1.0f;
 
-        // Constrain the inputs to our limits
-        if(speed > localMax){
-            speed = localMax;
-        }
-        if(speed < localMin){
-            speed = localMin;
-        }
+        m_Speed = Mathf.Clamp(speed, localMin, localMax);
 
-        // Map the input to a speed
-        float m_speed = (speed - localMax) * (MaxSpeed - MinSpeed) / (localMax - localMin) + MinSpeed;
+        // Increase the RPM for the wheels
+        float velocitySum = 0.0f;
+        float forceSum = 0.0f;
+        foreach(Wheel wheel in Wheels){
+            wheel.SetSpeed(speed);
+            velocitySum += wheel.WheelOutputVelocity;
+            forceSum += wheel.WheelOutputForce;
+        }
+        Velocity = velocitySum / Wheels.Length;
     }
 
-    void checkInputs()
+    void CheckInputs()
     {
         // Check for acceleration
         if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
         {
             // m_Speed += m_Acceleration;
-            setSpeed(1);
+            //SetSpeed(1);
+            SetSpeed(m_Speed + 0.1f);
         }
 
         // Check for deceleration/braking
         if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
         {
             // m_Speed -= m_Brake;
-            setSpeed(-1);
+            SetSpeed(m_Speed - 0.1f);
         }
 
         // Check for right turn
@@ -95,8 +101,21 @@ public class RobotController : MonoBehaviour
 
     }
 
-    public bool checkWheelSlip(){
+    public bool CheckWheelSlip(){
         return false;
+    }
+
+    // Set the speeds of the wheels so that we can have a differential turn
+    // in a direction with a given radius
+    public void Turn(int direction, float radius){
+        // R = W(V_L + V_R) / 2(V_L - VR)
+        // Where R = Radius of turn
+        // W = Distance between Left and Right wheels
+
+        // V_L, V_R = Velocity of Left and Right wheels respectively
+        // These can be calculated using:
+        // V_L = V ( 1 + W/(2R) )
+        // V_R = V ( 1 - W/(2R) )
     }
 
 }

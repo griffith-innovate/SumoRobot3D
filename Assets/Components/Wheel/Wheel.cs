@@ -17,7 +17,7 @@ public class Wheel : MonoBehaviour
     public float WheelDiameter;         // metres
     public float WheelFrictionCoefficient; 
     public float WheelOutputTorque;
-    public float WheelOuputForce;
+    public float WheelOutputForce;
     public float WheelOutputVelocity;
 
     public float xOffset;
@@ -27,9 +27,10 @@ public class Wheel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {   
-        MotorTorque = 1.99f;
+        MotorTorque = 0.63f;
         MotorRPM = 0.0f;
-        MotorMaxRPM = 8640.0f;
+        MotorMaxRPM = 7920.0f;
+        GearRatio = 0.12f;
         GearEfficiency = 0.8f;
         WheelDiameter = 0.055f;
         WheelFrictionCoefficient = 0.6f;
@@ -41,7 +42,7 @@ public class Wheel : MonoBehaviour
     }
 
     // Speed will be a value between 0 and 1
-    void SetSpeed(float speed){
+    public void SetSpeed(float speed){
         float localMax = 1.0f;
         float localMin = -1.0f;
 
@@ -49,11 +50,12 @@ public class Wheel : MonoBehaviour
         speed = Mathf.Clamp(speed, localMin, localMax);
 
         // Map MotorRPM to an absolute RPM value
-        MotorRPM = (Mathf.Abs(speed) - localMax) * (MotorMaxRPM / localMax);
+        // MotorRPM = (Mathf.Abs(speed) - localMax) * (MotorMaxRPM / localMax);
+        MotorRPM = Mathf.Lerp(0.0f, MotorMaxRPM, Mathf.InverseLerp(0.0f, 1.0f, Mathf.Abs(speed)));
 
         // Check if we're going forwards or backwards
         if(speed < 0.0f){
-            MotorRPM += -1;
+            MotorRPM *= -1;
         }
 
         // Calculate the gear output
@@ -61,8 +63,12 @@ public class Wheel : MonoBehaviour
         GearOutputRPM = (MotorRPM * GearRatio) * GearEfficiency;
 
         // Calculate the wheel torque
-        WheelOutputTorque = GearOuputTorque / (WheelDiameter / 2);
+        WheelOutputForce = GearOuputTorque / (WheelDiameter / 2);
         WheelOutputVelocity = (Mathf.PI * WheelDiameter) * (GearOutputRPM / 60);
+
+        if(this.name == "Wheel_FrontRight"){
+            Debug.Log(string.Format("MotorRPM: {0}", MotorRPM));
+        }
     }
 
 }
