@@ -66,9 +66,9 @@ public class Wheel : MonoBehaviour
         WheelOutputForce = GearOuputTorque / (WheelDiameter / 2);
         WheelOutputVelocity = (Mathf.PI * WheelDiameter) * (GearOutputRPM / 60);
 
-        if(this.name == "Wheel_FrontRight"){
-            Debug.Log(string.Format("MotorRPM: {0}", MotorRPM));
-        }
+        // if(this.name == "Wheel_FrontRight"){
+        //     Debug.Log(string.Format("MotorRPM: {0}", MotorRPM));
+        // }
     }
 
 }

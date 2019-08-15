@@ -18,6 +18,7 @@ public class RobotController : MonoBehaviour
     public float MaxSpeed;
     public float MinSpeed;
     public Wheel[] Wheels;
+    public OpticalSensor[] OpticalSensors;
     public float Force;
     // public MotorController MC;
 
@@ -34,6 +35,7 @@ public class RobotController : MonoBehaviour
 
         // Get the wheels
         Wheels = GetComponentsInChildren<Wheel>();
+        OpticalSensors = GetComponentsInChildren<OpticalSensor>();
 
         // What are the maximum velocity values?
         // +'ive for forwards, -'tive for backwards
@@ -52,14 +54,15 @@ public class RobotController : MonoBehaviour
     {
         CheckInputs();
         // Move object
-        m_Rigidbody.velocity = transform.forward * (Velocity + Time.deltaTime);
+        // m_Rigidbody.velocity = transform.forward * (Velocity + Time.deltaTime);
+        m_Rigidbody.transform.Translate(Vector3.forward * Velocity * Time.deltaTime);
         // m_Rigidbody.transform.forward 
     }
 
     // Set a relative speed. Valid input range is -1, ... , +1. This will 
     // be mapped to the minimum and maximum speeds. 
     public void SetSpeed(float speed){
-        Debug.Log("SetSpeed(" + speed + ")");
+        // Debug.Log("SetSpeed(" + speed + ")");
         float localMin = -1.0f;
         float localMax = 1.0f;
 
@@ -74,6 +77,10 @@ public class RobotController : MonoBehaviour
             forceSum += wheel.WheelOutputForce;
         }
         Velocity = velocitySum / Wheels.Length;
+    }
+
+    public void Turn(float angle){
+        transform.Rotate(0.0f, angle, 0.0f);
     }
 
     void CheckInputs()

@@ -136,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23a219314d0e07c41bc046b14b4d8df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rayLength: 0
-  hit: 0
-  hitObject: {fileID: 0}
+  RayLength: 0
+  Hit: 0
+  HitObject: {fileID: 0}
+  Name: 

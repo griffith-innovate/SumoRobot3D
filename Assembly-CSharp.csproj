@@ -2,6 +2,8 @@
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
+    <CscToolPath>D:\Program Files\Unity\2019.2.0f1\Editor\Data\Tools\RoslynScripts</CscToolPath>
+    <CscToolExe>unity_csc.bat</CscToolExe>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,8 +55,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Components\Sensors\OpticalSensor\LineOfSight.cs" />
+     <Compile Include="Assets\Components\Sensors\OpticalSensor\OpticalSensor.cs" />
      <Compile Include="Assets\Components\Wheel\Wheel.cs" />
+     <Compile Include="Assets\Robots\BasicRobot\DumbAgent.cs" />
      <Compile Include="Assets\Robots\BasicRobot\RobotController.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>E:/development/SumoRobot3D/SumoRobot3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
