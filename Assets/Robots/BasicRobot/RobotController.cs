@@ -18,6 +18,7 @@ public class RobotController : MonoBehaviour
     public float MaxSpeed;
     public float MinSpeed;
     public Wheel[] Wheels;
+    public float Force;
     // public MotorController MC;
 
 
@@ -26,6 +27,8 @@ public class RobotController : MonoBehaviour
     void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
+        Weight = 3.0f;
+        MagneticDownforce = 1000;
         m_Speed = 0.0f;
         m_Brake = 0.5f;
 
@@ -39,6 +42,9 @@ public class RobotController : MonoBehaviour
 
         // Default to move straight
         Direction = 0;
+
+        // Convert our downforce to a mass (kg)
+        m_Rigidbody.mass = Weight + (MagneticDownforce / 9.81f);
     }
 
     // Update is called once per frame
