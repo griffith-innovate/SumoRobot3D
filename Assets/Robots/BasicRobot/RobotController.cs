@@ -14,6 +14,7 @@ public class RobotController : MonoBehaviour
     public float MagneticDownforce;         // Newtons
     public Wheel[] Wheels;
     public OpticalSensor[] OpticalSensors;
+    public LineSensor[] LineSensors;
     public float Force;
     // public MotorController MC;
     public bool PControled_1 = false;
@@ -22,6 +23,7 @@ public class RobotController : MonoBehaviour
     public bool setStartLocation;
     private Vector3 startLocation;
     private Vector3 startRotation;
+    
     #endregion
     // Start is called before the first frame update
     void Start()
@@ -46,6 +48,7 @@ public class RobotController : MonoBehaviour
         // Get the wheels
         Wheels = GetComponentsInChildren<Wheel>();
         OpticalSensors = GetComponentsInChildren<OpticalSensor>();
+        LineSensors = GetComponentsInChildren<LineSensor>();
         
         // Convert our downforce to a mass (kg)
         m_Rigidbody.mass = Weight + (MagneticDownforce / 9.81f);
