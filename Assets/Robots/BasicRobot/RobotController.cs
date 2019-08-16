@@ -16,7 +16,8 @@ public class RobotController : MonoBehaviour
     public OpticalSensor[] OpticalSensors;
     public float Force;
     // public MotorController MC;
-    public bool PlayerControled;
+    public bool PControled_1 = false;
+    public bool PControled_2 = false;
 
     public bool setStartLocation;
     private Vector3 startLocation;
@@ -25,7 +26,11 @@ public class RobotController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log(gameObject.name);
+        Debug.Log(PControled_1);
+        Debug.Log(PControled_2);
         m_Rigidbody = GetComponent<Rigidbody>();
+        // m_Rigidbody = gameObject.rigidbody;
         Weight = 3.0f;
         MagneticDownforce = 1000;
         m_Speed = 0.0f;
@@ -83,9 +88,9 @@ public class RobotController : MonoBehaviour
 
     void CheckInputs()
     {
-        if (PlayerControled == true){
+        if (PControled_1 == true){
             // Check for acceleration
-            if (Input.GetKeyDown("w") || Input.GetKeyDown(KeyCode.UpArrow))
+            if (Input.GetKeyDown("w") )
             {
                 // m_Speed += m_Acceleration;
                 //SetSpeed(1);
@@ -93,22 +98,49 @@ public class RobotController : MonoBehaviour
             }
 
             // Check for deceleration/braking
-            if (Input.GetKeyDown("s") || Input.GetKeyDown(KeyCode.DownArrow))
+            if (Input.GetKeyDown("s") )
             {
                 // m_Speed -= m_Brake;
                 SetSpeed(m_Speed - 0.1f);
             }
 
             // Check for right turn
-            if (Input.GetKey("d") || Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey("d") )
             {
-                transform.Rotate(0.0f, 0.5f, 0.0f);
+                m_Rigidbody.transform.Rotate(0.0f, 0.5f, 0.0f);
             }
 
             // Check for left turn
-            if (Input.GetKey("a") || Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey("a") )
             {
-                transform.Rotate(0.0f, -0.5f, 0.0f);
+                m_Rigidbody.transform.Rotate(0.0f, -0.5f, 0.0f);
+            }
+        } else if (PControled_2 == true){
+            // Check for acceleration
+            if (Input.GetKeyDown(KeyCode.UpArrow))
+            {
+                // m_Speed += m_Acceleration;
+                //SetSpeed(1);
+                SetSpeed(m_Speed + 0.1f);
+            }
+
+            // Check for deceleration/braking
+            if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                // m_Speed -= m_Brake;
+                SetSpeed(m_Speed - 0.1f);
+            }
+
+            // Check for right turn
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                m_Rigidbody.transform.Rotate(0.0f, 0.5f, 0.0f);
+            }
+
+            // Check for left turn
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                m_Rigidbody.transform.Rotate(0.0f, -0.5f, 0.0f);
             }
         }
     }
