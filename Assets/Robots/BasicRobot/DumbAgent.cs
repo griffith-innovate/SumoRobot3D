@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DumbAgent : MonoBehaviour
 {
-    private RobotController Controller;
+    #region Public Interfaces
     public Collider Target;
     public OpticalSensor TargetFoundBy;
     public List<LineSensor> LineFoundBy;
@@ -14,30 +14,36 @@ public class DumbAgent : MonoBehaviour
     public float avgZ;
     public List<float> xValues;
     public List<float> zValues;
-    private bool turning;
+    #endregion
 
+    #region Private Members
+    private bool turning;
+    private RobotController Controller;
     // Start is called before the first frame update
-    void Start()
-    {
-        Controller = FindObjectOfType(typeof(RobotController)) as RobotController;
+    void Start(){
+        Controller = FindObjectOfType( typeof( RobotController ) ) as RobotController;
         Target = null;
         TargetFoundBy = null;
         LineFoundBy = new List<LineSensor>();
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
+        // Reset the robot if it has fallen off the edge
+        if (transform.position.y < 0) {
+            Controller.Reset();
+        }
+
         // Only do something if it's alive
-        if(isAlive){
+        if( isAlive ){
             Scan();
             CheckLineSensors();
-            if(Target == null){
+            if( Target == null ){
                 Controller.SetSpeed(1.0f);
                 Scout();
             } else {
                 Aim();
-                Controller.SetSpeed(1.0f);
+                Controller.SetSpeed( 1.0f );
             }
         }
     }
@@ -47,9 +53,9 @@ public class DumbAgent : MonoBehaviour
         // Clear our line sensor data
         LineFoundBy.Clear();
 
-        foreach(LineSensor sensor in Controller.LineSensors){
-            if(sensor.Hit()){
-                LineFoundBy.Add(sensor);        
+        foreach( LineSensor sensor in Controller.LineSensors ){
+            if( sensor.Hit ){
+                LineFoundBy.Add( sensor );        
             }
         }
 
@@ -58,25 +64,25 @@ public class DumbAgent : MonoBehaviour
         float sumX = 0.0f;
         float sumZ = 0.0f;
         // float avgX, avgZ;
-        foreach(LineSensor sensor in LineFoundBy) {
-            Vector3 relativePoint = transform.InverseTransformPoint(sensor.transform.position);
-            sumX += (float)System.Math.Round(relativePoint.x, 3);
-            sumZ += (float)System.Math.Round(relativePoint.z, 3);
-            xValues.Add(relativePoint.x);
-            zValues.Add(relativePoint.z);
+        foreach( LineSensor sensor in LineFoundBy ) {
+            Vector3 relativePoint = transform.InverseTransformPoint( sensor.transform.position );
+            sumX += ( float )System.Math.Round( relativePoint.x, 3 );
+            sumZ += ( float )System.Math.Round( relativePoint.z, 3 );
+            xValues.Add( relativePoint.x );
+            zValues.Add( relativePoint.z );
         }
         avgX = sumX / LineFoundBy.Count;
         avgZ = sumZ / LineFoundBy.Count;
-        if(avgZ > 0) {
+        if( avgZ > 0 ) {
             LineDirection = "North";
-        } else if(avgZ < 0) {
+        } else if( avgZ < 0 ) {
             LineDirection = "South";
         } else {
             LineDirection = "Middle";
         }
-        if(avgX > 0) {
+        if( avgX > 0 ) {
             LineDirection += " East";
-        } else if(avgX < 0) {
+        } else if( avgX < 0 ) {
             LineDirection += " West";
         } else {
             LineDirection += " Center";
@@ -89,9 +95,9 @@ public class DumbAgent : MonoBehaviour
         TargetFoundBy = null;
 
         // Find out what it sees
-        foreach(OpticalSensor sensor in Controller.OpticalSensors){
-            if(sensor.Hit()){
-                Target = sensor.HitObject();
+        foreach( OpticalSensor sensor in Controller.OpticalSensors ){
+            if( sensor.Hit ){
+                Target = sensor.HitObject;
                 TargetFoundBy = sensor;
                 break;
             }
@@ -99,31 +105,28 @@ public class DumbAgent : MonoBehaviour
     }
     void Scout(){
         // Check to see if our robot has hit a white line
-        if(turning){
-            if(LineFoundBy.Count == 0){
+        if( turning ){
+            if( LineFoundBy.Count == 0 ){
                 turning = false;
             }
         } else {
-            if(LineFoundBy.Count > 0){
+            if( LineFoundBy.Count > 0 ){
                 turning = true;
-                if(LineDirection.Contains("East")){
-                    Controller.Turn(-30);
-                } else if(LineDirection.Contains("West")){
-                    Controller.Turn(30);
+                if( LineDirection.Contains( "East" ) ){
+                    Controller.Turn( -30 );
+                } else if( LineDirection.Contains( "West" ) ){
+                    Controller.Turn( 30 );
                 } else {
-                    Controller.Turn(130);
+                    Controller.Turn( 130 );
                 }
             }
         }
-        // Turn around
-            // Controller.Turn(-10f);
-
-
     }
 
     void Aim(){
         // What is the angle of the sensor that found it
-        float angle = TargetFoundBy.Angle();
-        Controller.Turn(angle);
+        float angle = TargetFoundBy.Angle;
+        Controller.Turn( angle );
     }
+    #endregion
 }
