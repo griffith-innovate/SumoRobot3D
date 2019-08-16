@@ -5,15 +5,20 @@ using UnityEngine;
 public class DumbAgent : MonoBehaviour
 {
     #region Public Interfaces
-    public Collider Target;
-    public OpticalSensor TargetFoundBy;
-    public List<LineSensor> LineFoundBy;
-    public bool isAlive = true;
-    public string LineDirection;
-    public float avgX;
-    public float avgZ;
-    public List<float> xValues;
-    public List<float> zValues;
+    public Collider Target { get; set; }[SerializeField]
+    private Collider target;
+    public OpticalSensor TargetFoundBy { get; set; }[SerializeField]
+    private OpticalSensor targetFoundBy;
+    public LineSensor[] LineFoundBy;[SerializeField]
+    private LineSensor[] lineFoundBy;
+    public bool IsAlive = true;[SerializeField]
+    private bool isAlive;
+    public string LineDirection;[SerializeField]
+    private string lineDirection;
+    public float AvgX;[SerializeField]
+    private float avgX;
+    public float AvgZ;[SerializeField]
+    private float avgZ;
     #endregion
 
     #region Private Members
@@ -24,18 +29,17 @@ public class DumbAgent : MonoBehaviour
         Controller = FindObjectOfType( typeof( RobotController ) ) as RobotController;
         Target = null;
         TargetFoundBy = null;
-        LineFoundBy = new List<LineSensor>();
     }
 
     // Update is called once per frame
     void Update() {
         // Reset the robot if it has fallen off the edge
-        if (transform.position.y < 0) {
+        if( transform.position.y < -1 ) {
             Controller.Reset();
         }
 
         // Only do something if it's alive
-        if( isAlive ){
+        if( IsAlive ){
             Scan();
             CheckLineSensors();
             if( Target == null ){
@@ -51,38 +55,39 @@ public class DumbAgent : MonoBehaviour
     void CheckLineSensors(){
         Debug.Log("CheckLineSensors()");
         // Clear our line sensor data
-        LineFoundBy.Clear();
+        List<LineSensor> LineFoundBy = new List<LineSensor>();
 
         foreach( LineSensor sensor in Controller.LineSensors ){
             if( sensor.Hit ){
                 LineFoundBy.Add( sensor );        
             }
         }
+        this.LineFoundBy = LineFoundBy.ToArray();
 
         // What direction is the line?
         LineDirection = "Test";
         float sumX = 0.0f;
         float sumZ = 0.0f;
         // float avgX, avgZ;
-        foreach( LineSensor sensor in LineFoundBy ) {
+        //foreach ( LineSensor sensor in LineFoundBy ) {
+        for(int i = 0; i < this.LineFoundBy.Length; i++ ) {
+            LineSensor sensor = this.LineFoundBy[i];
             Vector3 relativePoint = transform.InverseTransformPoint( sensor.transform.position );
             sumX += ( float )System.Math.Round( relativePoint.x, 3 );
             sumZ += ( float )System.Math.Round( relativePoint.z, 3 );
-            xValues.Add( relativePoint.x );
-            zValues.Add( relativePoint.z );
         }
-        avgX = sumX / LineFoundBy.Count;
-        avgZ = sumZ / LineFoundBy.Count;
-        if( avgZ > 0 ) {
+        AvgX = sumX / LineFoundBy.Count;
+        AvgZ = sumZ / LineFoundBy.Count;
+        if( AvgZ > 0 ) {
             LineDirection = "North";
-        } else if( avgZ < 0 ) {
+        } else if( AvgZ < 0 ) {
             LineDirection = "South";
         } else {
             LineDirection = "Middle";
         }
-        if( avgX > 0 ) {
+        if( AvgX > 0 ) {
             LineDirection += " East";
-        } else if( avgX < 0 ) {
+        } else if( AvgX < 0 ) {
             LineDirection += " West";
         } else {
             LineDirection += " Center";
@@ -106,11 +111,11 @@ public class DumbAgent : MonoBehaviour
     void Scout(){
         // Check to see if our robot has hit a white line
         if( turning ){
-            if( LineFoundBy.Count == 0 ){
+            if( LineFoundBy.Length == 0 ){
                 turning = false;
             }
         } else {
-            if( LineFoundBy.Count > 0 ){
+            if( LineFoundBy.Length > 0 ){
                 turning = true;
                 if( LineDirection.Contains( "East" ) ){
                     Controller.Turn( -30 );

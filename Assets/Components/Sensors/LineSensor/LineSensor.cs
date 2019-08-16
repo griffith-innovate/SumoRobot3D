@@ -6,10 +6,20 @@ public class LineSensor : MonoBehaviour
 {
     #region Public Interfaces
     public float Range { get; set; } = 0.1f;
+    [SerializeField]
+    private float range;
     public bool Hit { get; set; } = false;
+    [SerializeField]
+    private bool hit;
     public Collider HitObject { get; set; }
+    [SerializeField]
+    private Collider hitObject;
     public float Angle { get; set; }
+    [SerializeField]
+    private float angle;
     public float Distance { get; set; }
+    [SerializeField]
+    private float distance;
     #endregion
 
 
@@ -32,8 +42,7 @@ public class LineSensor : MonoBehaviour
         Debug.DrawRay( transform.position, transform.forward * Range, Color.yellow, 0.5f );
         
         // Do something if the raycast hits a rigid body in the scene
-        if ( Physics.Raycast( transform.position, transform.forward, out vision, Range ) )
-        {
+        if ( Physics.Raycast( transform.position, transform.forward, out vision, Range ) ){
             HitObject = vision.collider;
             Distance = vision.distance;
 

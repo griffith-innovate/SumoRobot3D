@@ -5,12 +5,22 @@ using UnityEngine;
 public class OpticalSensor : MonoBehaviour
 {
     #region Public Interfaces
-    public float RayLength { get; set; }             // Assign length to the raycast
+    public float RayLength { get; set; }                                        // Assign length to the raycast
+    [SerializeField]
+    private float rayLength;
     public bool Hit { get; set; } = false;
+    [SerializeField]
+    private bool hit;
     // public Rigidbody hitObject;
     public Collider HitObject { get; set; }
+    [SerializeField]
+    private Collider hitObject;
     public float Angle { get; set; }
+    [SerializeField]
+    private float angle;
     public float Distance { get; set; }
+    [SerializeField]
+    private float distance;
     #endregion
 
 

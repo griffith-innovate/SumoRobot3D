@@ -63,7 +63,7 @@ public class RobotController : MonoBehaviour
         CheckInputs();
         // Move object
         rigidbodyComponent.transform.Translate( Vector3.forward * Velocity * Time.deltaTime );
-        Reset();
+        //Reset();
         // m_Rigidbody.transform.forward 
     }
 

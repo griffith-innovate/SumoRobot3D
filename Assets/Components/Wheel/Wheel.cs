@@ -5,15 +5,25 @@ using UnityEngine;
 public class Wheel : MonoBehaviour {
     #region Public Interfaces
     public float MotorTorque { get; set; } = 0.63f;                             // In Newton metres (Nm)
+    [SerializeField]
+    private float motorTorque;
     public float MotorMaxRPM { get; set; } = 7920.0f;                           // Get this from the motor data sheet      
     public float WheelDiameter { get; set; } = 0.055f;                          // Metres (m)
     public float WheelFrictionCoefficient { get; set; } = 0.6f;                 // The rolling coefficient between the wheel and the dohyo
     public float WheelOutputForce { get; set; }                                 // The force the wheel adds to the robot (N)
+    [SerializeField]
+    private float wheelOutputForce;
     public float WheelOutputSpeed { get; set; }                                 // The speed at which the robot will move forward (m/s)
+    [SerializeField]
+    private float wheelOutputSpeed;
     public float GearRatio { get; set; } = 0.12f;                               // 0, ... , 1
+    [SerializeField]
+    private float gearRatio;
     public float GearEfficiency { get; set; } = 0.8f;                           // 0, ..., 1
-    
-    
+    [SerializeField]
+    private float gearEfficiency;
+
+
     // Converts the relative speed to an absolute motor RPM and calculates the 
     // wheel output speed and force. 
     public void SetSpeed( float speed ) {
