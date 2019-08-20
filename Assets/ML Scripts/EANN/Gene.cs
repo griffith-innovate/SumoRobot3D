@@ -57,11 +57,11 @@ public class ConnectionGene                                 //ConnectionGene Sub
         expressed = false;
     }
 
-    public void RandomWeight(Random r){
+    public void RandomWeight(System.Random r){
         weight = (float)(r.NextDouble()*2-1);
     }
 
-    public void PerturbWeight(Random r){
+    public void PerturbWeight(System.Random r){
         weight += (float)(r.NextDouble()-0.5)*0.5f;
     }
 

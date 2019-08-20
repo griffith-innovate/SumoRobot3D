@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class Genome {
     private List<int> connectionKeys;                           //list of innovation numbers of connections
@@ -13,7 +14,7 @@ public class Genome {
         connectionList = new Dictionary<int, ConnectionGene>();
     }
 
-    public Genome( int inputNodes, int outputNodes, Random r )              //Makes a basic genome with only input and output nodes
+    public Genome( int inputNodes, int outputNodes, System.Random r )              //Makes a basic genome with only input and output nodes
     {
         connectionKeys = new List<int>();
         nodeList = new List<NodeGene>();
@@ -57,7 +58,7 @@ public class Genome {
         connectionKeys.Add( con.GetInnovation() );
     }
 
-    public void Mutate( float randomChance, Random r ) {
+    public void Mutate( float randomChance, System.Random r ) {
         foreach ( ConnectionGene con in connectionList.Values ) {
             if ( r.NextDouble() < randomChance ) {
                 con.RandomWeight( r );
@@ -67,7 +68,7 @@ public class Genome {
         }
     }
 
-    public void AddNodeMutation( Random r )                                   //insert a node between two connected nodes
+    public void AddNodeMutation( System.Random r )                                   //insert a node between two connected nodes
     {
         int conKey = connectionKeys[r.Next(connectionKeys.Count)];      //get a random connection
         ConnectionGene con = connectionList[conKey];
@@ -89,7 +90,7 @@ public class Genome {
         connectionList.Add( innovation2, new ConnectionGene( newNode.GetID(), node2, con.GetWeight(), true, innovation2 ) );
     }
 
-    public void AddConnectionMutation( Random r )                               //Adds a connection between two random nodes
+    public void AddConnectionMutation( System.Random r )                               //Adds a connection between two random nodes
     {
         int node1 = r.Next(nodeList.Count);
         int node2 = r.Next(nodeList.Count);
