@@ -53,5 +53,7 @@
         "temp/":true,
         "Temp/":true
     },
-    "editor.codeLens": false
+    "editor.codeLens": false,
+    "editor.formatOnPaste": true,
+    "editor.formatOnSave": true
 }
