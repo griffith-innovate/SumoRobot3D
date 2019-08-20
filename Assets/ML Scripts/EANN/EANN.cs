@@ -26,24 +26,4 @@ public class EANN : MonoBehaviour
 
     }
 
-    private Genotype NewGenotype()
-    {
-        Genotype child = new Genotype();
-        return child;
-    }
-
-    public Crossover(Genotype parentA, Genotype parentB)
-    {
-        if (parentB.Fitness > parentA.Fitness)
-        {
-            Genotype temp = parentA;
-            parentA = parentB;
-            parentB = temp;
-        }
-
-        Genotype child = NewGenotype();
-
-        List<innovation> innovations = new List<innovation>();
-
-    }
 }
