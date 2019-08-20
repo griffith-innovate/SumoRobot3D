@@ -56,6 +56,7 @@
      <Compile Include="Assets\Components\Sensors\LineSensor\LineSensor.cs" />
      <Compile Include="Assets\Components\Sensors\OpticalSensor\OpticalSensor.cs" />
      <Compile Include="Assets\Components\Wheel\Wheel.cs" />
+     <Compile Include="Assets\GameController.cs" />
      <Compile Include="Assets\ML Scripts\EANN\EANN.cs" />
      <Compile Include="Assets\Robots\BasicRobot\DumbAgent.cs" />
      <Compile Include="Assets\Robots\BasicRobot\RobotController.cs" />
