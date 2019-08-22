@@ -18,8 +18,7 @@ such as weight etc, are also set here. The public interfaces are:
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-public class RobotController : MonoBehaviour
-{
+public class RobotController : MonoBehaviour {
     #region Public Interfaces
     public float Speed { get; set; }
     public float Velocity { get; set; }                  // Velocity of the robot in m/s
@@ -34,7 +33,7 @@ public class RobotController : MonoBehaviour
     public bool PControled_2;
 
     public bool SetStartLocation { get; set; }
-  
+
     public float DistanceMoved;
     public Rigidbody rigidbodyComponent;
     // Start is called before the first frame update
@@ -50,7 +49,7 @@ public class RobotController : MonoBehaviour
 
         // update the reset location of the robot, if not checked, robot will default to zero/zero
         if (SetStartLocation) {
-           Debug.Log("updating start position");
+            Debug.Log("updating start position");
             startLocation = rigidbodyComponent.transform.position;
             startRotation = rigidbodyComponent.transform.eulerAngles;
             previousLocation = startLocation;
@@ -62,7 +61,7 @@ public class RobotController : MonoBehaviour
         LineSensors = GetComponentsInChildren<LineSensor>();
 
         // Convert our downforce to a mass (kg)
-        rigidbodyComponent.mass = Weight + ( MagneticDownforce / 9.81f );
+        rigidbodyComponent.mass = Weight + (MagneticDownforce / 9.81f);
     }
 
     // Update is called once per frame 
@@ -78,18 +77,18 @@ public class RobotController : MonoBehaviour
 
     // Set a relative speed. Valid input range is -1, ... , +1. This will be 
     // mapped to the minimum and maximum speeds. 
-    public void SetSpeed( float speed ) {
+    public void SetSpeed(float speed) {
         // Debug.Log("SetSpeed(" + speed + ")");
         float localMin = -1.0f;
         float localMax = 1.0f;
 
-        Speed = Mathf.Clamp( speed, localMin, localMax );
+        Speed = Mathf.Clamp(speed, localMin, localMax);
 
         // Increase the RPM for the wheels
         float velocitySum = 0.0f;
         float forceSum = 0.0f;
-        foreach ( Wheel wheel in Wheels ) {
-            wheel.SetSpeed( speed );
+        foreach (Wheel wheel in Wheels) {
+            wheel.SetSpeed(speed);
             velocitySum += wheel.WheelOutputSpeed;
             forceSum += wheel.WheelOutputForce;
         }
@@ -97,36 +96,34 @@ public class RobotController : MonoBehaviour
     }
 
     // Turns or rotates the robot along the Y-axis
-    public void Turn( float angle ) {
-        transform.Rotate( 0.0f, angle, 0.0f );
+    public void Turn(float angle) {
+        transform.Rotate(0.0f, angle, 0.0f);
     }
 
     // Reset the robot to its original state
     public void Reset() {
-        Debug.Log( "reset Bot" );
+        Debug.Log("reset Bot");
 
         // Set velocity of the robot to zero
         rigidbodyComponent.angularVelocity = Vector3.zero;
         rigidbodyComponent.velocity = Vector3.zero;
 
         // Stop the robot
-        SetSpeed( 0 );
+        SetSpeed(0);
 
         // Reset the position of the robot
         rigidbodyComponent.transform.position = startLocation;
         rigidbodyComponent.transform.eulerAngles = startRotation;
     }
 
-    public void AgentResetCheck()
-    {
+    public void AgentResetCheck() {
         // Debug.Log(targetTransform);
-        if (this.transform.position.y < -2.0f)
-        {
+        if (this.transform.position.y < -2.0f) {
             // If the Agent fell, zero its momentum
             Debug.Log("reset Bot");
             rigidbodyComponent.angularVelocity = Vector3.zero;
             rigidbodyComponent.velocity = Vector3.zero;
-            Speed =0;
+            Speed = 0;
             SetSpeed(Speed);
             rigidbodyComponent.transform.position = startLocation;
             rigidbodyComponent.transform.eulerAngles = startRotation;
@@ -137,62 +134,54 @@ public class RobotController : MonoBehaviour
     #region Private Members
     private Vector3 startLocation;
     private Vector3 startRotation;
-    private Vector3 previousLocation; 
+    private Vector3 previousLocation;
 
     // These controls are for testing the robot movements
     void CheckInputs() {
-        if (PControled_1 == true){
+        if (PControled_1 == true) {
             // Check for acceleration
-            if (Input.GetKeyDown("w") )
-            {
+            if (Input.GetKeyDown("w")) {
                 // Speed += m_Acceleration;
                 //SetSpeed(1);
                 SetSpeed(Speed + 0.1f);
             }
 
             // Check for deceleration/braking
-            if (Input.GetKeyDown("s") )
-            {
+            if (Input.GetKeyDown("s")) {
                 // Speed -= m_Brake;
                 SetSpeed(Speed - 0.1f);
             }
 
             // Check for right turn
-            if (Input.GetKey("d") )
-            {
+            if (Input.GetKey("d")) {
                 rigidbodyComponent.transform.Rotate(0.0f, 0.5f, 0.0f);
             }
 
             // Check for left turn
-            if (Input.GetKey("a") )
-            {
+            if (Input.GetKey("a")) {
                 rigidbodyComponent.transform.Rotate(0.0f, -0.5f, 0.0f);
             }
-        } else if (PControled_2 == true){
+        } else if (PControled_2 == true) {
             // Check for acceleration
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
+            if (Input.GetKeyDown(KeyCode.UpArrow)) {
                 // Speed += m_Acceleration;
                 //SetSpeed(1);
                 SetSpeed(Speed + 0.1f);
             }
 
             // Check for deceleration/braking
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
+            if (Input.GetKeyDown(KeyCode.DownArrow)) {
                 // Speed -= m_Brake;
                 SetSpeed(Speed - 0.1f);
             }
 
             // Check for right turn
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
+            if (Input.GetKey(KeyCode.RightArrow)) {
                 rigidbodyComponent.transform.Rotate(0.0f, 0.5f, 0.0f);
             }
 
             // Check for left turn
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
+            if (Input.GetKey(KeyCode.LeftArrow)) {
                 rigidbodyComponent.transform.Rotate(0.0f, -0.5f, 0.0f);
             }
         }

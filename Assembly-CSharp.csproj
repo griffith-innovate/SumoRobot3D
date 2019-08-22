@@ -56,7 +56,6 @@
      <Compile Include="Assets\Components\Sensors\LineSensor\LineSensor.cs" />
      <Compile Include="Assets\Components\Sensors\OpticalSensor\OpticalSensor.cs" />
      <Compile Include="Assets\Components\Wheel\Wheel.cs" />
-     <Compile Include="Assets\ML Scripts\EANN\EANN.cs" />
      <Compile Include="Assets\ML Scripts\ML-Agents\Examples\3DBall\Scripts\Ball3DAcademy.cs" />
      <Compile Include="Assets\ML Scripts\ML-Agents\Examples\3DBall\Scripts\Ball3DAgent.cs" />
      <Compile Include="Assets\ML Scripts\ML-Agents\Examples\3DBall\Scripts\Ball3DDecision.cs" />

@@ -26,31 +26,31 @@ public class Wheel : MonoBehaviour {
 
     // Converts the relative speed to an absolute motor RPM and calculates the 
     // wheel output speed and force. 
-    public void SetSpeed( float speed ) {
+    public void SetSpeed(float speed) {
         float localMax = 1.0f;
         float localMin = -1.0f;
 
         // Constrain our speed value
-        speed = Mathf.Clamp( speed, localMin, localMax );
+        speed = Mathf.Clamp(speed, localMin, localMax);
 
         // Map MotorRPM to an absolute RPM value
-        motorRPM = Mathf.Lerp( 0.0f, MotorMaxRPM, Mathf.InverseLerp( 0.0f, 1.0f, Mathf.Abs( speed ) ) );
+        motorRPM = Mathf.Lerp(0.0f, MotorMaxRPM, Mathf.InverseLerp(0.0f, 1.0f, Mathf.Abs(speed)));
 
         // Check if we're going forwards or backwards
-        if ( speed < 0.0f ) {
+        if (speed < 0.0f) {
             motorRPM *= -1;
         }
 
         // Calculate the gear output
-        gearOutputTorque = ( MotorTorque / GearRatio ) * GearEfficiency;
-        gearOutputRPM = ( motorRPM * GearRatio ) * GearEfficiency;
+        gearOutputTorque = (MotorTorque / GearRatio) * GearEfficiency;
+        gearOutputRPM = (motorRPM * GearRatio) * GearEfficiency;
 
         // Calculate the wheel torque
-        WheelOutputForce = gearOutputTorque / ( WheelDiameter / 2 );
-        WheelOutputSpeed = ( Mathf.PI * WheelDiameter ) * ( gearOutputRPM / 60 );
+        WheelOutputForce = gearOutputTorque / (WheelDiameter / 2);
+        WheelOutputSpeed = (Mathf.PI * WheelDiameter) * (gearOutputRPM / 60);
 
-        if ( this.name == "Wheel_FrontRight" ) {
-            Debug.Log( string.Format( "MotorRPM: {0}", motorRPM ) );
+        if (this.name == "Wheel_FrontRight") {
+            Debug.Log(string.Format("MotorRPM: {0}", motorRPM));
         }
     }
     #endregion
@@ -58,13 +58,13 @@ public class Wheel : MonoBehaviour {
 
     #region Private Members
     private float motorRPM;
-    private float gearOutputRPM;                                              
+    private float gearOutputRPM;
     private float gearOutputTorque;
     // Start is called before the first frame update
     void Start() {
         motorRPM = 0.0f;
-        GearRatio = Mathf.Clamp( GearRatio, 0, 1 );
-        GearEfficiency = Mathf.Clamp( GearEfficiency, 0, 1 );
+        GearRatio = Mathf.Clamp(GearRatio, 0, 1);
+        GearEfficiency = Mathf.Clamp(GearEfficiency, 0, 1);
         MotorTorque = 0.63f;
         MotorMaxRPM = 7920.0f;
         GearRatio = 0.12f;

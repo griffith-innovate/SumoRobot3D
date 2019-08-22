@@ -11,17 +11,11 @@ robots of each game according to their performance and progress to their goals.
 ================================================================================
 */
 
-public class GameController : MonoBehaviour
-{
+public class GameController : MonoBehaviour {
     // Start is called before the first frame update
-    void Start()
-    {
-
+    void Start() {
     }
-
     // Update is called once per frame
-    void Update()
-    {
-
+    void Update() {
     }
 }
