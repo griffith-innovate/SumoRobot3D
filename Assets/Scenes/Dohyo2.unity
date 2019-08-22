@@ -120,66 +120,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &66705024 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6006993997327778726, guid: 26d20ed490254ac439dd131162a9d227,
-    type: 3}
-  m_PrefabInstance: {fileID: 6006993996390779231}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &66705026
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 66705024}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &936182483 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6006993996697291660, guid: 26d20ed490254ac439dd131162a9d227,
-    type: 3}
-  m_PrefabInstance: {fileID: 6006993996390779231}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &936182484
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 936182483}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Convex: 0
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 0}
---- !u!1 &1110031323 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6006993998076357845, guid: 26d20ed490254ac439dd131162a9d227,
-    type: 3}
-  m_PrefabInstance: {fileID: 6006993996390779231}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1110031325
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110031323}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &1488310837
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,7 +218,7 @@ PrefabInstance:
     - target: {fileID: 4903902329446977479, guid: 2a86b7a93c7bb0a4ba3599a6e3f9ac57,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.072
+      value: -0.013
       objectReference: {fileID: 0}
     - target: {fileID: 4903902329446977479, guid: 2a86b7a93c7bb0a4ba3599a6e3f9ac57,
         type: 3}
@@ -288,7 +228,7 @@ PrefabInstance:
     - target: {fileID: 4903902329446977479, guid: 2a86b7a93c7bb0a4ba3599a6e3f9ac57,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.665
+      value: -0.024
       objectReference: {fileID: 0}
     - target: {fileID: 4903902329446977479, guid: 2a86b7a93c7bb0a4ba3599a6e3f9ac57,
         type: 3}
@@ -490,32 +430,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6006993998076357844, guid: 26d20ed490254ac439dd131162a9d227,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.00001
-      objectReference: {fileID: 0}
-    - target: {fileID: 6006993997327778726, guid: 26d20ed490254ac439dd131162a9d227,
-        type: 3}
-      propertyPath: m_Name
-      value: BlackArea
-      objectReference: {fileID: 0}
-    - target: {fileID: 6006993998076357845, guid: 26d20ed490254ac439dd131162a9d227,
-        type: 3}
-      propertyPath: m_Name
-      value: WhiteLine
-      objectReference: {fileID: 0}
-    - target: {fileID: 6006993997327778724, guid: 26d20ed490254ac439dd131162a9d227,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6006993998076357843, guid: 26d20ed490254ac439dd131162a9d227,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6006993997327778724, guid: 26d20ed490254ac439dd131162a9d227, type: 3}
-    - {fileID: 6006993998076357843, guid: 26d20ed490254ac439dd131162a9d227, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26d20ed490254ac439dd131162a9d227, type: 3}
