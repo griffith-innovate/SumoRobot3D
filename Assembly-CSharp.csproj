@@ -53,6 +53,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\ballAgent.cs" />
      <Compile Include="Assets\Components\Sensors\LineSensor\LineSensor.cs" />
      <Compile Include="Assets\Components\Sensors\OpticalSensor\OpticalSensor.cs" />
      <Compile Include="Assets\Components\Wheel\Wheel.cs" />
@@ -176,9 +177,17 @@
      <Compile Include="Assets\Robots\BasicRobot\TestScript.cs" />
      <Compile Include="Assets\Robots\Ramp_BasicRobot\AgentScript_old.cs" />
      <Compile Include="Assets\Robots\Ramp_BasicRobot\SumoRobot_Ramp.cs" />
+     <Compile Include="Assets\Robots\Ryoma_ML\AgentScript.cs" />
+     <Compile Include="Assets\Scripts\ArrowController.cs" />
+     <Compile Include="Assets\Scripts\CubeController.cs" />
      <Compile Include="Assets\Scripts\FollowCam.cs" />
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\Scripts\TrainingAcademy.cs" />
+     <Compile Include="Assets\TurnTheGameOn\Arrow WayPointer\Demo Scene\Scripts\CharacterControllerThirdPerson.cs" />
+     <Compile Include="Assets\TurnTheGameOn\Arrow WayPointer\Demo Scene\Scripts\SmoothFollow.cs" />
+     <Compile Include="Assets\TurnTheGameOn\Arrow WayPointer\Demo Scene\Scripts\UserControlThirdPerson.cs" />
+     <Compile Include="Assets\TurnTheGameOn\Arrow WayPointer\Scripts\Waypoint.cs" />
+     <Compile Include="Assets\TurnTheGameOn\Arrow WayPointer\Scripts\WaypointController.cs" />
      <None Include="Assets\ML Scripts\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Experimental.compute" />
      <None Include="Assets\ML Scripts\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Conv.compute" />
      <None Include="Assets\ML Scripts\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Random.cginc" />
@@ -192,6 +201,7 @@
      <None Include="Assets\ML Scripts\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\FastNV.compute" />
      <None Include="Assets\ML Scripts\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Dense.compute" />
      <None Include="Assets\ML Scripts\ML-Agents\Plugins\Barracuda.Core\Barracuda\Resources\Generic.compute" />
+     <None Include="Assets\TurnTheGameOn\Arrow WayPointer\Read Me.txt" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
@@ -396,8 +406,8 @@
  <Reference Include="UnityEngine.XRModule">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.0f1/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
  </Reference>
- <Reference Include="Google.Protobuf">
- <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+ <Reference Include="System.IO.Abstractions">
+ <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/System.IO.Abstractions.dll</HintPath>
  </Reference>
  <Reference Include="System.IO.Abstractions.TestingHelpers">
  <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/System.IO.Abstractions.TestingHelpers.dll</HintPath>
@@ -405,14 +415,14 @@
  <Reference Include="Barracuda">
  <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/Barracuda.Core/Barracuda/Barracuda.dll</HintPath>
  </Reference>
- <Reference Include="System.IO.Abstractions">
- <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/System.IO.Abstractions.dll</HintPath>
- </Reference>
- <Reference Include="System.Interactive.Async">
- <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
+ <Reference Include="Google.Protobuf">
+ <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
  </Reference>
  <Reference Include="Grpc.Core">
  <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Interactive.Async">
+ <HintPath>D:/Git/Griffith Innovate/SumoRobot3D/Assets/ML Scripts/ML-Agents/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
  </Reference>
  <Reference Include="mscorlib">
  <HintPath>C:/Program Files/Unity/Hub/Editor/2019.2.0f1/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

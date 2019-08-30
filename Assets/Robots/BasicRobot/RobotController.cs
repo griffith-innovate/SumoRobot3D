@@ -22,17 +22,25 @@ public class RobotController : MonoBehaviour {
     #region Public Interfaces
     public float Speed { get; set; }
     public float Velocity { get; set; }                  // Velocity of the robot in m/s
-    public float Weight { get; set; }                    // Newtons
-    public float MagneticDownforce { get; set; }         // Newtons
+    public float Weight { get; set; }     
+    
+    public float MagneticDownforce { get; set; }     // Newtons
+    [SerializeField] private float magneticDownforce = 1000;          
+
     public Wheel[] Wheels { get; set; }
+
     public OpticalSensor[] OpticalSensors { get; set; }
+    [SerializeField] private OpticalSensor[] opticalSensors;
     public LineSensor[] LineSensors { get; set; }
+    [SerializeField] private  LineSensor[]  lineSensors;
     public float Force { get; set; }
     // public MotorController MC;
-    public bool PControled_1;
-    public bool PControled_2;
-
-    public bool SetStartLocation { get; set; }
+    [SerializeField]
+    private bool PControled_1;
+    [SerializeField]
+    private bool PControled_2;
+    [SerializeField]
+    private bool SetStartLocation; 
 
     public float DistanceMoved;
     public Rigidbody rigidbodyComponent;
@@ -44,7 +52,7 @@ public class RobotController : MonoBehaviour {
 
         rigidbodyComponent = GetComponent<Rigidbody>();
         Weight = 3.0f;
-        MagneticDownforce = 1000;
+        
         Speed = 0.0f;
 
         // update the reset location of the robot, if not checked, robot will default to zero/zero
@@ -71,6 +79,9 @@ public class RobotController : MonoBehaviour {
         // Move object
         rigidbodyComponent.transform.Translate(Vector3.forward * Velocity * Time.deltaTime);
         DistanceMoved = Vector3.Distance(previousLocation, rigidbodyComponent.transform.position);
+        Debug.Log("SetSpeed: "+ Speed + " SetRotation: "+transform.eulerAngles);
+        // Debug.Log("velocity: "+ rigidbodyComponent.velocity.magnitude);
+
         //Reset();
         // rigidbodyComponent.transform.forward 
     }
@@ -82,13 +93,13 @@ public class RobotController : MonoBehaviour {
         float localMin = -1.0f;
         float localMax = 1.0f;
 
-        Speed = Mathf.Clamp(speed, localMin, localMax);
+        Speed = Mathf.Clamp(Speed + speed, localMin, localMax);
 
         // Increase the RPM for the wheels
         float velocitySum = 0.0f;
         float forceSum = 0.0f;
         foreach (Wheel wheel in Wheels) {
-            wheel.SetSpeed(speed);
+            wheel.SetSpeed(Speed);
             velocitySum += wheel.WheelOutputSpeed;
             forceSum += wheel.WheelOutputForce;
         }
@@ -97,6 +108,7 @@ public class RobotController : MonoBehaviour {
 
     // Turns or rotates the robot along the Y-axis
     public void Turn(float angle) {
+        float NewAngle = angle * 360;
         transform.Rotate(0.0f, angle, 0.0f);
     }
 
@@ -105,15 +117,15 @@ public class RobotController : MonoBehaviour {
         Debug.Log("reset Bot");
 
         // Set velocity of the robot to zero
-        rigidbodyComponent.angularVelocity = Vector3.zero;
-        rigidbodyComponent.velocity = Vector3.zero;
+        // rigidbodyComponent.angularVelocity = Vector3.zero;
+        // rigidbodyComponent.velocity = Vector3.zero;
 
         // Stop the robot
         SetSpeed(0);
 
         // Reset the position of the robot
-        rigidbodyComponent.transform.position = startLocation;
-        rigidbodyComponent.transform.eulerAngles = startRotation;
+        // rigidbodyComponent.transform.position = startLocation;
+        // rigidbodyComponent.transform.eulerAngles = startRotation;
     }
 
     public void AgentResetCheck() {
@@ -132,7 +144,7 @@ public class RobotController : MonoBehaviour {
 
     #endregion
     #region Private Members
-    private Vector3 startLocation;
+    public Vector3 startLocation;
     private Vector3 startRotation;
     private Vector3 previousLocation;
 
