@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\ballAgent.cs" />
+     <Compile Include="Assets\Components\Sensors\LIDAR\LIDAR.cs" />
      <Compile Include="Assets\Components\Sensors\LineSensor\LineSensor.cs" />
      <Compile Include="Assets\Components\Sensors\OpticalSensor\OpticalSensor.cs" />
      <Compile Include="Assets\Components\Wheel\Wheel.cs" />
